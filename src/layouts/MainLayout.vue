@@ -3,10 +3,7 @@
     <ShellBar />
     <div class="p-grid">
       <div class="p-col">
-        <router-view
-          v-bind:settings="settings"
-          v-on:updateSettings="(settings) => $emit('updateSettings', settings)"
-        />
+        <router-view />
       </div>
     </div>
   </div>
@@ -16,14 +13,7 @@
 import ShellBar from "@/components/ShellBar";
 
 export default {
-  name: "mainLayout",
-
-  props: {
-    settings: {
-      type: Object,
-      required: true,
-    },
-  },
+  name: "main-layout",
 
   mounted() {},
 

@@ -1,5 +1,5 @@
 <template>
-  <MainLayout v-bind:settings="settings" v-on:updateSettings="updateSettings" />
+  <MainLayout />
 </template>
 
 <script>
@@ -8,32 +8,14 @@ import MainLayout from "@/layouts/MainLayout";
 export default {
   name: "app",
   data() {
-    return {
-      settings: {
-        url: "",
-        token: "",
-      },
-    };
+    return {};
   },
-
   mounted() {
-    let jsonSettings = localStorage.getItem("settings");
-
-    if (jsonSettings !== null) {
-      this.settings = JSON.parse(jsonSettings);
-    }
+    this.$store.dispatch("init");
   },
-
   computed: {},
-
-  methods: {
-    updateSettings(newSettings) {
-      this.settings = newSettings;
-      localStorage.setItem("settings", JSON.stringify(this.settings));
-    },
-  },
+  methods: {},
   watch: {},
-
   components: {
     MainLayout,
   },

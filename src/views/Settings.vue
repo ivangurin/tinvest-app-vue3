@@ -32,28 +32,23 @@
 
 <script>
 export default {
-  name: "Settings",
-  props: {
-    settings: {
-      type: Object,
-      required: true,
-    },
-  },
+  name: "settings",
+
   data() {
     return {
       localSettings: {},
     };
   },
 
-  mounted() {
-    this.localSettings = this.settings;
+  async mounted() {
+    this.localSettings = await this.$store.getters.settings;
   },
 
   computed: {},
 
   methods: {
     updateSettings() {
-      this.$emit("updateSettings", this.localSettings);
+      this.$store.commit("updateSettings", this.localSettings);
     },
   },
 

@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import App from "@/App.vue";
+import store from "./store";
 import router from "@/router";
 
 import "primevue/resources/themes/saga-blue/theme.css";
@@ -23,6 +24,7 @@ import ProgressSpinner from "primevue/progressspinner";
 
 const app = createApp(App);
 
+app.use(store);
 app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
@@ -35,14 +37,8 @@ app.component("Toast", Toast);
 app.component("PanelMenu", PanelMenu);
 app.component("DataTable", DataTable);
 app.component("Column", Column);
-app.component(
-  "ColumnGroup",
-  ColumnGroup
-);
+app.component("ColumnGroup", ColumnGroup);
 app.component("Row", Row);
-app.component(
-  "ProgressSpinner",
-  ProgressSpinner
-);
+app.component("ProgressSpinner", ProgressSpinner);
 
 app.mount("#app");

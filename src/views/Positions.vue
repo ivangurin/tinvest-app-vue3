@@ -66,14 +66,7 @@
 
 <script>
 export default {
-  name: "Positions",
-  props: {
-    settings: {
-      type: Object,
-      required: true,
-    },
-  },
-
+  name: "positions",
   data() {
     return {
       showPositions: false,
@@ -161,6 +154,9 @@ export default {
   },
 
   computed: {
+    settings() {
+      return this.$store.getters.settings;
+    },
     totals() {
       if (this.positions.length === 0) {
         return;

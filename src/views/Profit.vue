@@ -161,13 +161,7 @@
 
 <script>
 export default {
-  name: "Profit",
-  props: {
-    settings: {
-      type: Object,
-      required: true,
-    },
-  },
+  name: "profit",
 
   data() {
     return {
@@ -254,6 +248,9 @@ export default {
   },
 
   computed: {
+    settings() {
+      return this.$store.getters.settings;
+    },
     total() {
       if (this.profit.length == 0) {
         return;
