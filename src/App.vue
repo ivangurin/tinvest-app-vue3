@@ -1,30 +1,44 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  <MainLayout v-bind:settings="settings" v-on:updateSettings="updateSettings" />
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import MainLayout from "@/layouts/MainLayout";
 
-#nav {
-  padding: 30px;
-}
+export default {
+  name: "app",
+  data() {
+    return {
+      settings: {
+        url: "",
+        token: "",
+      },
+    };
+  },
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  mounted() {
+    let jsonSettings = localStorage.getItem("settings");
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+    if (jsonSettings !== null) {
+      this.settings = JSON.parse(jsonSettings);
+    }
+  },
+
+  computed: {},
+
+  methods: {
+    updateSettings(newSettings) {
+      this.settings = newSettings;
+      localStorage.setItem("settings", JSON.stringify(this.settings));
+    },
+  },
+  watch: {},
+
+  components: {
+    MainLayout,
+  },
+};
+</script>
+
+<style scoped>
 </style>
