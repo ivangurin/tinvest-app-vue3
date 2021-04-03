@@ -1,11 +1,11 @@
 <template>
   <div class="p-ml-3 p-mt-3 p-mr-3">
     <ShellBar />
-    <div class="p-grid">
-      <div class="p-col">
-        <router-view />
-      </div>
-    </div>
+    <router-view v-slot="{ Component }">
+      <keep-alive include="profit">
+        <component :is="Component" :key="$route.fullPath"></component>
+      </keep-alive>
+    </router-view>
   </div>
 </template>
 
@@ -19,7 +19,11 @@ export default {
 
   computed: {},
 
-  methods: {},
+  methods: {
+    test(component) {
+      console.log(component);
+    },
+  },
 
   watch: {},
 
