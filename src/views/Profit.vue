@@ -51,7 +51,18 @@
             ></Column>
           </Row>
         </ColumnGroup>
-        <Column field="ticker"></Column>
+        <Column field="ticker">
+          <template #body="slotProps">
+            <router-link
+              :to="{
+                name: 'operations',
+                params: { ticker: slotProps.data.ticker },
+              }"
+            >
+              {{ slotProps.data.ticker }}
+            </router-link>
+          </template>
+        </Column>
         <Column field="text"></Column>
         <Column field="currency"></Column>
         <Column field="quantityBuy" class="p-text-right">

@@ -10,7 +10,18 @@
         selectionMode="single"
         scrollHeight="flex"
       >
-        <Column field="ticker" header="Ticker" :sortable="true"></Column>
+        <Column field="ticker" header="Ticker" :sortable="true">
+          <template #body="slotProps">
+            <router-link
+              :to="{
+                name: 'operations',
+                params: { ticker: slotProps.data.ticker },
+              }"
+            >
+              {{ slotProps.data.ticker }}
+            </router-link>
+          </template>
+        </Column>
         <Column field="text" header="Text" :sortable="true"></Column>
         <Column
           field="quantity"
@@ -25,11 +36,7 @@
           class="p-text-right"
         >
           <template #body="slotProps">
-            {{
-              formatCurrency(slotProps.data.price) +
-              " " +
-              slotProps.data.currency
-            }}
+            {{ formatCurrency(slotProps.data.price, slotProps.data.currency) }}
           </template>
         </Column>
         <Column
@@ -39,11 +46,7 @@
           class="p-text-right"
         >
           <template #body="slotProps">
-            {{
-              formatCurrency(slotProps.data.profit) +
-              " " +
-              slotProps.data.currency
-            }}
+            {{ formatCurrency(slotProps.data.profit, slotProps.data.currency) }}
           </template>
         </Column>
         <ColumnGroup type="footer">
@@ -146,8 +149,17 @@ export default {
       this.showLoading = false;
     },
 
-    formatCurrency(value) {
+    formatQuantity(value) {
       let formater = new Intl.NumberFormat("ru-RU");
+      let text = formater.format(Math.round(value * 100) / 100);
+      return text;
+    },
+
+    formatCurrency(value, currency) {
+      let formater = new Intl.NumberFormat("ru-RU", {
+        style: "currency",
+        currency: currency,
+      });
       let text = formater.format(Math.round(value * 100) / 100);
       return text;
     },
@@ -187,7 +199,7 @@ export default {
           textProfit += `\n\r`;
         }
 
-        textProfit += `${this.formatCurrency(value)} ${key}`;
+        textProfit += `${this.formatCurrency(value, key)}`;
       });
 
       return {
