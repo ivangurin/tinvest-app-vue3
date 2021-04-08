@@ -5,10 +5,10 @@
     <div v-if="showPositions === true">
       <DataTable
         class="p-datatable-sm"
-        :value="positions"
         showGridlines
         selectionMode="single"
         scrollHeight="flex"
+        :value="positions"
       >
         <Column field="ticker" header="Ticker" :sortable="true">
           <template #body="slotProps">
@@ -46,7 +46,11 @@
           class="p-text-right"
         >
           <template #body="slotProps">
-            {{ formatCurrency(slotProps.data.profit, slotProps.data.currency) }}
+            <div :class="profitClass(slotProps.data)">
+              {{
+                formatCurrency(slotProps.data.profit, slotProps.data.currency)
+              }}
+            </div>
           </template>
         </Column>
         <ColumnGroup type="footer">
@@ -163,6 +167,9 @@ export default {
       let text = formater.format(Math.round(value * 100) / 100);
       return text;
     },
+    profitClass(data) {
+      return data.profit > 0 ? "text-green" : data.profit < 0 ? "text-red" : "";
+    },
   },
 
   computed: {
@@ -211,3 +218,12 @@ export default {
   components: {},
 };
 </script>
+
+<style scoped>
+.text-green {
+  color: green !important;
+}
+.text-red {
+  color: red !important;
+}
+</style>

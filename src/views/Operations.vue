@@ -7,6 +7,7 @@
       class="p-datatable-sm"
       :value="operations"
       showGridlines
+      stripedRows
       selectionMode="single"
       scrollHeight="flex"
     >
@@ -47,7 +48,30 @@
         class="p-text-right"
       >
         <template #body="slotProps">
-          {{ formatCurrency(slotProps.data.value, slotProps.data.currency) }}
+          {{
+            formatCurrency(
+              slotProps.data.type === "Buy"
+                ? slotProps.data.value * -1
+                : slotProps.data.value,
+              slotProps.data.currency
+            )
+          }}
+        </template>
+      </Column>
+
+      <Column
+        field="commission"
+        header="Commission"
+        :sortable="true"
+        class="p-text-right"
+      >
+        <template #body="slotProps">
+          {{
+            formatCurrency(
+              slotProps.data.commission * -1,
+              slotProps.data.currency
+            )
+          }}
         </template>
       </Column>
     </DataTable>
@@ -182,3 +206,9 @@ export default {
   components: {},
 };
 </script>
+
+<style scoped>
+.row-green {
+  background-color: green;
+}
+</style>

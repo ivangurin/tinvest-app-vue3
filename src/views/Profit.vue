@@ -142,12 +142,16 @@
         </Column>
         <Column field="totalValue" class="p-text-right">
           <template #body="slotProps">
-            {{ formatCurrency(slotProps.data.totalValue) }}
+            <div :class="totalClass(slotProps.data)">
+              {{ formatCurrency(slotProps.data.totalValue) }}
+            </div>
           </template>
         </Column>
         <Column field="totalPercent" class="p-text-right">
           <template #body="slotProps">
-            {{ formatCurrency(slotProps.data.totalPercent) }}
+            <div :class="totalClass(slotProps.data)">
+              {{ formatCurrency(slotProps.data.totalPercent) + "%" }}
+            </div>
           </template>
         </Column>
         <ColumnGroup type="footer">
@@ -256,6 +260,13 @@ export default {
       let text = formater.format(Math.round(value * 100) / 100);
       return text;
     },
+    totalClass(data) {
+      return data.totalValue > 0
+        ? "text-green"
+        : data.totalValue < 0
+        ? "text-red"
+        : "";
+    },
   },
 
   computed: {
@@ -332,3 +343,12 @@ export default {
   components: {},
 };
 </script>
+
+<style scoped>
+.text-green {
+  color: green !important;
+}
+.text-red {
+  color: red !important;
+}
+</style>
